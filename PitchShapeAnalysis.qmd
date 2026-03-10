@@ -8,8 +8,53 @@ editor: visual
 library(tidyverse)
 ```
 
-
-
 ```{r}
 pitch_shapes <- read_csv("data/419_pitch_shapes.csv")
 ```
+
+MANOVA:
+```{r}
+manova.pitch_shapes <- manova(cbind(relspeed,spinrate,inducedvertbreak,horzbreak) ~ as.factor(pitcher),
+                              data = pitch_shapes)
+
+H <- summary(manova.pitch_shapes)$SS$"as.factor(pitcher)"
+E <- summary(manova.pitch_shapes)$SS$Residuals
+
+H
+E
+```
+
+Lambdas:
+```{r}
+lambdas <- eigen(solve(E)%*%H)$values
+lambdas
+```
+
+Wilk's Test:
+```{r}
+summary(manova.pitch_shapes, test = "Wilks")
+
+```
+
+Roy's Test:
+```{r}
+theta <- lambdas[1]/(1+lambdas[1])
+theta
+summary(manova.pitch_shapes, test = "Roy")
+```
+
+Pillai's Test:
+```{r}
+summary(manova.pitch_shapes, test = "Pillai")
+```
+
+Hotelling-Lawley's Test:
+```{r}
+summary(manova.pitch_shapes, test = "Hotelling-Lawley")
+```
+
+
+
+
+
+
