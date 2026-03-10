@@ -1,0 +1,15 @@
+---
+title: "Pitch Shape Analysis"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+
+```{r}
+pitch_shapes <- read_csv("data/419_pitch_shapes.csv")
+```
